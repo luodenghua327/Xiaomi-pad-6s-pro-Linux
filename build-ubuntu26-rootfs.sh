@@ -84,14 +84,14 @@ chroot rootdir apt-get install -y --no-install-recommends eatmydata
 
 if ls *.deb 1> /dev/null 2>&1; then
     cp *.deb rootdir/tmp/
-    chroot rootdir eatmydata apt-get install -y /tmp/*.deb || true
+    chroot rootdir eatmydata bash -c 'apt-get install -y /tmp/*.deb'
 fi
 
 # 基础核心依赖 (增加 parted 和 e2fsprogs 用于扩容)
 chroot rootdir eatmydata apt-get install -y --no-install-recommends \
     systemd sudo vim-tiny wget curl \
     network-manager openssh-server \
-    wpasupplicant dbus parted e2fsprogs
+    wpasupplicant wireless-regdb dbus parted e2fsprogs
 
 # 设置英文语言环境
 chroot rootdir bash -c "echo 'LANG=en_US.UTF-8' > /etc/default/locale"
